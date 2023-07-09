@@ -4,15 +4,42 @@ export {};
 
 declare global {
 
-  interface ICoordinates {
+  interface ILocation {
     lat: number
     lng: number
+  }
+
+  interface IPropertyForMap {
+    id: string
+    price: number
+    location: ILocation
+    numberOfRooms: number
+    totalArea: number
+    floor: number
+  }
+
+  interface IImage {
+    id: string
+    url: string
+    rotation: number
+    width: number
+    height: number
   }
 
   interface IPropertyListing {
     id: string
     title: string,
-    coordinates: ICoordinates
+    location: ILocation
     price: number
+    priceUSD: number
+    sourceUrl: string,
+    photos: IImage[],
+    createdAt: string,
+    refreshedAt: string,
+    description: string,
+    numberOfRooms: number,
+    totalArea: number,
+    floor: number,
+    totalFloors: number
   }
 }

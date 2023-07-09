@@ -1,29 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
-import Map from '../components/map/map';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import MapWithSidePanel from '../components/map/MapWithSidePanel';
+import { getAllPropertiesForMap } from '../helpers/api-utils';
 
-export default function Home() {
-  const listings: IPropertyListing[] = [
-    {
-      id: '123',
-      title: 'Cool flat',
-      price: 300,
-      coordinates: {
-        lat: 41.2795,
-        lng: 69.2601,
-      },
-    },
-    {
-      id: '123',
-      title: 'Shitty flat',
-      price: 100,
-      coordinates: {
-        lat: 41.2195,
-        lng: 69.2301,
-      },
-    },
-  ];
+type Props = {
+  locations: IPropertyForMap[]
+};
 
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { locations } = props;
   return (
     <>
       <Head>
@@ -33,7 +19,12 @@ export default function Home() {
           content="Apartments for rent in Tashkent on a google map"
         />
       </Head>
-      <Map listings={listings} />
+      <MapWithSidePanel locations={locations} />
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const locations = await getAllPropertiesForMap();
+  return { props: { locations } };
+};
