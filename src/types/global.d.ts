@@ -42,4 +42,24 @@ declare global {
     floor: number,
     totalFloors: number
   }
+
+  interface FilterState {
+    boundMinPrice: number
+    boundMaxPrice: number
+    boundMinRooms: number
+    boundMaxRooms: number
+    boundMinFloor: number
+    boundMaxFloor: number
+    boundMinTotalArea: number
+    boundMaxTotalArea: number
+    currentMinPrice: number
+    currentMaxPrice: number
+    currentOnlyPreciseLocations: boolean
+    currentMinRooms: number
+    currentMaxRooms: number
+    currentMinFloor: number
+    currentMaxFloor: number
+    currentMinTotalArea: number
+    currentMaxTotalArea: number
+  }
 }

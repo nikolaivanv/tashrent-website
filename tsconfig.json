@@ -19,6 +19,6 @@
     },
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/map/map.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/mapSearch/map.js"],
   "exclude": ["node_modules"]
 }

@@ -1,8 +1,12 @@
 import React from 'react';
+import Header from '../header/Header';
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main>{children}</main>
+    <>
+      <Header />
+      <main>{children}</main>
+    </>
   );
 }
 

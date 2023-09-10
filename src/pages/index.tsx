@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import MapWithSidePanel from '../components/map/MapWithSidePanel';
+import MapSearch from '../components/mapSearch/MapSearch';
 import { getAllPropertiesForMap } from '../helpers/api-utils';
 
 type Props = {
@@ -19,7 +19,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
           content="Apartments for rent in Tashkent on a google map"
         />
       </Head>
-      <MapWithSidePanel locations={locations} />
+      <MapSearch locations={locations} />
     </>
   );
 }

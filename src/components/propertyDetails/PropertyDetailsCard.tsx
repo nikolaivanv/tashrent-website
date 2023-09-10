@@ -5,20 +5,9 @@ import PropertyPhotoGallery from './PropertyPhotoGallery';
 
 type Props = {
   propertyId: string
-//   // propertyTitle: string,
-//   price: number,
-//   sourceUrl: string,
-//   imageUrls: string[],
-//   createdAt: string,
-//   refreshedAt: string,
-//   description: string,
-//   numberOfRooms: number,
-//   totalArea: number,
-//   floor: number,
-//   totalFloors: number
 };
 
-function PropertyDetails(props: Props) {
+function PropertyDetailsCard(props: Props) {
   const { propertyId } = props;
   const { property, isLoading, isError } = useProperty(propertyId);
 
@@ -39,4 +28,4 @@ function PropertyDetails(props: Props) {
   );
 }
 
-export default PropertyDetails;
+export default PropertyDetailsCard;

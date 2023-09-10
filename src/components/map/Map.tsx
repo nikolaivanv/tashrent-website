@@ -2,25 +2,21 @@ import React, { useState, useRef } from 'react';
 import GoogleMap from 'google-maps-react-markers';
 import useSupercluster from '../../hooks/useSupercluster';
 import Marker from './Marker';
-import SidePanel from '../sidePanel/SidePanel';
-import PropertyDetails from '../propertyDetails/PropertyDetails';
-import LocationFilters from './LocationFilters';
 
 type Props = {
-  locations: IPropertyForMap[]
+  locations: IPropertyForMap[],
+  onSelectLocations: (selectedLocationsIds: number) => void
 };
 
-function MapWithSidePanel(props: Props) {
-  const { locations } = props;
+function Map(props: Props) {
+  const { locations, onSelectLocations } = props;
   const mapRef = useRef(null);
   const [bounds, setBounds] = useState([69.15693006286622, 41.231565100006854, 69.3232699371338, 41.367364210349656]);
   const [zoom, setZoom] = useState(13);
   const [mapReady, setMapReady] = useState(false);
   const [highlighted, setHighlighted] = useState<string | undefined>();
-  const [sidePanelOpen, setSidePanelOpen] = useState(false);
-  const [filteredLocations, setFilteredLocations] = useState(locations);
 
-  const points = filteredLocations.map((location) => ({
+  const points = locations.map((location) => ({
     type: 'Feature',
     properties: { cluster: false, locationId: location.id, price: location.price },
     geometry: {
@@ -39,9 +35,13 @@ function MapWithSidePanel(props: Props) {
     options: { radius: 40, maxZoom: 20 },
   });
 
+  const options = {
+    mapTypeControl: false,
+  };
+
   const onMarkerClick = (markerId: string) => {
     setHighlighted(markerId);
-    setSidePanelOpen(true);
+    onSelectLocations(markerId);
   };
 
   const onClusterClick = (cluster, longitude, latitude) => {
@@ -53,38 +53,19 @@ function MapWithSidePanel(props: Props) {
     mapRef.current.panTo({ lat: latitude, lng: longitude });
   };
 
-  const onSidePanelClose = () => {
-    setSidePanelOpen(false);
-  };
-
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onGoogleApiLoaded = ({ map, maps }) => {
     mapRef.current = map;
     setMapReady(true);
   };
 
-  const onFilterProperties = (minPrice, maxPrice) => {
-    const newFilteredLocations = locations.filter((location) => (location.price >= minPrice) && (location.price <= maxPrice));
-    setFilteredLocations(newFilteredLocations);
-  };
-
-  const sidePanel = (
-    <SidePanel title={`Property id: ${highlighted}`} onClose={onSidePanelClose}>
-      <PropertyDetails propertyId={highlighted} />
-    </SidePanel>
-  );
-
-  // <div style={{ height: '100vh', width: '100%' }}>
   return (
     <div className="h-screen w-full">
-      <div><LocationFilters minPrice={0} maxPrice={2000} onFilter={onFilterProperties} /></div>
-      {sidePanelOpen && sidePanel}
       <GoogleMap
         apiKey="AIzaSyBNiRXTTteHR_vvMGMFcWzGWrXyjN43DGk"
         defaultCenter={{ lat: 41.2995, lng: 69.2401 }}
         defaultZoom={13}
         onGoogleApiLoaded={onGoogleApiLoaded}
+        options={options}
         yesIWantToUseGoogleMapApiInternals
         onChange={({ zoom, bounds }) => {
           setZoom(zoom);
@@ -93,7 +74,6 @@ function MapWithSidePanel(props: Props) {
           setBounds([sw.lng(), sw.lat(), ne.lng(), ne.lat()]);
         }}
       >
-        {console.log(clusters)}
         {clusters.map((cluster) => {
           const [longitude, latitude] = cluster.geometry.coordinates;
           const {
@@ -146,4 +126,4 @@ function MapWithSidePanel(props: Props) {
   );
 }
 
-export default MapWithSidePanel;
+export default Map;

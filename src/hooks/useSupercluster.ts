@@ -25,10 +25,6 @@ function useSupercluster(_ref) {
 
     if (bounds) {
       setClusters(superclusterRef.current.getClusters(bounds, zoomInt));
-      // console.log(bounds);
-      // console.log(superclusterRef.current);
-      // console.log(zoomInt);
-      // console.log(superclusterRef.current.getClusters(bounds, zoomInt));
     }
 
     pointsRef.current = points;
