@@ -1,5 +1,5 @@
 import React from 'react';
-import LocationFiltersPanel from './LocationFiltersPanel';
+import LocationFiltersPanel from './FiltersForm';
 import Drawer from '../ui/drawer/Drawer';
 
 type Props = {

@@ -3,8 +3,8 @@ import useFilters from '@/hooks/useFilters';
 import useFindFilterBoundaries from '@/hooks/useFindFilterBoundaries';
 import Drawer from '../ui/drawer/Drawer';
 import PropertyDetailsCard from '../propertyDetails/PropertyDetailsCard';
-import LocationFiltersPanel from '../locationFilters/LocationFiltersPanel';
-import Button from '../ui/button/Button';
+import LocationFiltersPanel from '../locationFilters/FiltersForm';
+import { Button, buttonVariants } from '../ui/button/Button';
 import Map from '../map/Map';
 import PropertyDetailsDrawer from '../propertyDetails/propertyDetailsDrawer';
 import LocationFiltersDrawer from '../locationFilters/LocationFiltersDrawer';
@@ -78,7 +78,7 @@ function MapSearch(props: Props) {
 
   return (
     <>
-      <Button primary text="filters" onClick={onShowFiltersButtonClick} />
+      <Button variant="default" onClick={onShowFiltersButtonClick}>Filters</Button>
       <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterStateChange} />
       <PropertyDetailsDrawer propertyId={highlighted} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
       <Map locations={filteredLocations} onSelectLocations={handleSelectLocations} />
