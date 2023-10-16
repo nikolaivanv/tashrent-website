@@ -10,15 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-teal-200 text-slate-50 shadow hover:bg-teal-300 dark:bg-teal-200 dark:text-slate-900 dark:hover:bg-teal-300',
+          'bg-mint-700 text-white shadow hover:bg-mint-800 dark:bg-mint-700 dark:text-white dark:hover:bg-mint-800',
         destructive:
           'bg-red-500 text-slate-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90',
-        outline:
-          'border border-slate-200 bg-transparent shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-slate-50',
         secondary:
-          'bg-slate-100 text-slate-900 shadow-sm hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80',
-        ghost: 'hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50',
-        link: 'text-slate-900 underline-offset-4 hover:underline dark:text-slate-50',
+          'bg-green-gray-600 text-white shadow-sm hover:bg-green-gray-700 dark:bg-green-gray-600 dark:hover:bg-green-gray-700',
+        outline:
+          'border text-green-gray-700 border-green-gray-700 bg-transparent shadow-sm hover:bg-green-gray-50 hover:border-green-gray-50 dark:border-green-gray-300 dark:text-green-gray-300 dark:hover:text-white dark:hover:bg-green-gray-700 dark:hover:border-green-gray-700',
+        ghost: 'hover:bg-green-gray-50 text-green-gray-700 dark:hover:bg-green-gray-700 dark:text-green-gray-300',
+        link: 'text-green-gray-700 underline-offset-4 hover:underline dark:text-green-gray-300',
       },
       size: {
         default: 'h-9 px-4 py-2',

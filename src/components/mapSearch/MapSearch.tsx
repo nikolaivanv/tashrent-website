@@ -1,6 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, {
+  useState, useMemo,
+} from 'react';
 import useFilters from '@/hooks/useFilters';
 import useFindFilterBoundaries from '@/hooks/useFindFilterBoundaries';
+
 import Drawer from '../ui/drawer/Drawer';
 import PropertyDetailsCard from '../propertyDetails/PropertyDetailsCard';
 import LocationFiltersPanel from '../locationFilters/FiltersForm';
@@ -15,7 +18,7 @@ type Props = {
 
 function MapSearch(props: Props) {
   const { locations } = props;
-  const [highlighted, setHighlighted] = useState<string | undefined>();
+  const [highlightedPropertyId, setHighlightedPropertyId] = useState<string | undefined>();
   const [propertyDetailsIsOpen, setPropertyDetailsIsOpen] = useState(false);
   const [filterState, setFilterState] = useState<FilterState>({
     boundMinPrice: 0,
@@ -39,8 +42,8 @@ function MapSearch(props: Props) {
   const [filtersPanelIsOpen, setFiltersPanelIsOpen] = useState(true);
   const [filteredLocations, setFilteredLocations] = useState(locations);
 
-  const handleSelectLocations = (propertyId: number) => {
-    setHighlighted(propertyId);
+  const handleSelectLocations = (propertyId: string) => {
+    setHighlightedPropertyId(propertyId);
     setPropertyDetailsIsOpen(true);
   };
 
@@ -80,7 +83,7 @@ function MapSearch(props: Props) {
     <>
       <Button variant="default" onClick={onShowFiltersButtonClick}>Filters</Button>
       <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterStateChange} />
-      <PropertyDetailsDrawer propertyId={highlighted} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
+      <PropertyDetailsDrawer propertyId={highlightedPropertyId} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
       <Map locations={filteredLocations} onSelectLocations={handleSelectLocations} />
     </>
   );

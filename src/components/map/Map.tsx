@@ -32,7 +32,7 @@ function Map(props: Props) {
     points,
     bounds,
     zoom,
-    options: { radius: 40, maxZoom: 20 },
+    options: { radius: 100, maxZoom: 20 },
   });
 
   const options = {
@@ -59,7 +59,7 @@ function Map(props: Props) {
   };
 
   return (
-    <div className="h-screen w-full">
+    <div className="w-full h-screen">
       <GoogleMap
         apiKey="AIzaSyBNiRXTTteHR_vvMGMFcWzGWrXyjN43DGk"
         defaultCenter={{ lat: 41.2995, lng: 69.2401 }}
@@ -85,11 +85,12 @@ function Map(props: Props) {
             return (
               <Marker
                 key={cluster.id}
-                text={`${cluster.properties.point_count} properties`}
+                text={`${cluster.properties.point_count}`}
                 // text={`${cluster.price}`}
                 lat={latitude}
                 lng={longitude}
                 markerId={cluster.id}
+                isCluster
                 highlighted={highlighted === cluster.id}
                 onClick={() => onClusterClick(cluster, longitude, latitude)}
               />
@@ -102,6 +103,7 @@ function Map(props: Props) {
               text={`$${cluster.properties.price}`}
               lat={latitude}
               lng={longitude}
+              isCluster={false}
               markerId={cluster.properties.locationId}
               highlighted={highlighted === cluster.properties.locationId}
               onClick={onMarkerClick}

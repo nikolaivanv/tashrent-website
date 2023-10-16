@@ -10,6 +10,11 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
+    'storybook-css-modules',
+    //'@storybook/addon-themes'
+    //'storybook-addon-themes'
+    'storybook-tailwind-dark-mode',
+    "@storybook/addon-styling",
   ],
   framework: {
     name: "@storybook/nextjs",
@@ -39,4 +44,6 @@ const config: StorybookConfig = {
   //   return config;
   // },
 };
+
+
 export default config;

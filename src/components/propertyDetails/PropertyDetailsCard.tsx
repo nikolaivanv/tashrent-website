@@ -1,17 +1,16 @@
 import React from 'react';
 import Image from 'next/image';
-import useProperty from '@/hooks/useProperty';
+
 import PropertyPhotoGallery from './PropertyPhotoGallery';
 
 type Props = {
-  propertyId: string
+  property: IPropertyListing;
+  isLoading: boolean;
+  isError: boolean;
 };
 
 function PropertyDetailsCard(props: Props) {
-  const { propertyId } = props;
-  const { property, isLoading, isError } = useProperty(propertyId);
-
-  if (isLoading) return 'Loading';
+  const { property, isLoading, isError } = props;
 
   if (!property) {
     return (
@@ -20,10 +19,23 @@ function PropertyDetailsCard(props: Props) {
       </div>
     );
   }
+  if (isError) {
+    return (
+      <div>
+        Error loading property info
+      </div>
+    );
+  }
+  if (isLoading) {
+    return (
+      <div>
+        Loading
+      </div>
+    );
+  }
   return (
-    <div>
+    <div className="flex w-120">
       <PropertyPhotoGallery images={property.photos} />
-
     </div>
   );
 }
