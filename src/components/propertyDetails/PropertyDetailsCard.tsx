@@ -34,8 +34,19 @@ function PropertyDetailsCard(props: Props) {
     );
   }
   return (
-    <div className="flex w-120">
+    <div className="w-[500px]">
       <PropertyPhotoGallery images={property.photos} />
+      <div>
+        <div className="text-black">
+          {property.title}
+        </div>
+        <div className="text-black">
+          {property.priceUSD}
+        </div>
+        <div className="text-black">
+          {property.description}
+        </div>
+      </div>
     </div>
   );
 }

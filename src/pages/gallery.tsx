@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { SlideShow, SlideShowItem } from '@/components/ui/slideshow/Slideshow';
 
 const items = [
@@ -30,21 +31,17 @@ export default function Gallery() {
           content="Apartments for rent in Tashkent on a google map"
         />
       </Head>
-      <SlideShow
-        items={items}
-        renderItem={({
-          item, index, isActive, isSnapPoint,
-        }) => (
-          <SlideShowItem
-            key={index}
-            isSnapPoint={isSnapPoint}
-            isActive={isActive}
-            src={item.src}
-            title={item.title}
-            subtitle={item.subtitle}
-          />
-        )}
-      />
+      <div className="relative w-1/4 aspect-square">
+        <Image
+          alt="alt text"
+          src="https://picsum.photos/1280/720?idx=0"
+          fill
+          className="object-cover"
+          // style={{
+          //   objectFit: 'cover',
+          // }}
+        />
+      </div>
     </>
   );
 }

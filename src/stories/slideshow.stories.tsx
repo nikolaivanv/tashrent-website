@@ -28,7 +28,7 @@ const items = [
 
 export function Default() {
   return (
-    <div>
+    <div className="w-[500px]">
       <SlideShow
         items={items}
         renderItem={({
@@ -39,8 +39,7 @@ export function Default() {
             isSnapPoint={isSnapPoint}
             isActive={isActive}
             src={item.src}
-            title={item.title}
-            subtitle={item.subtitle}
+            // title={item.title}
           />
         )}
       />

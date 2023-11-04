@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSnapCarousel } from 'react-snap-carousel';
 import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'react-feather';
 // import './reset.css';
 
 // const styles = require('./Slideshow.module.css');
@@ -14,6 +15,7 @@ import Image from 'next/image';
 
 export interface SlideShowProps<T> {
   readonly items: T[];
+  readonly pagination?: boolean;
   readonly renderItem: (
     props: SlideShowRenderItemProps<T>
   ) => React.ReactElement<SlideShowItemProps>;
@@ -31,6 +33,7 @@ export function SlideShow<T extends any>({
   items,
   renderItem,
   scrollPadding = false,
+  pagination = false,
 }: SlideShowProps<T>) {
   const {
     scrollRef,
@@ -63,12 +66,16 @@ export function SlideShow<T extends any>({
 
   return (
     <div
-      className={classNames('relative', { // styles.root
-        '': scrollPadding, // [styles.scrollPadding]: scrollPadding,
-      })}
+      className="relative group" // styles.root
     >
       {/* <ul className={styles.scroll} */}
-      <ul className="box-border relative flex overflow-auto snap-x snap-mandatory overscroll-contain no-scrollbar" ref={scrollRef}>
+      <ul
+        className={classNames(
+          'box-border relative flex overflow-auto snap-x snap-mandatory overscroll-contain no-scrollbar rounded-xl',
+          { 'scroll-p-5': scrollPadding },
+        )}
+        ref={scrollRef}
+      >
         {items.map((item, index) => renderItem({
           item,
           index,
@@ -83,22 +90,33 @@ export function SlideShow<T extends any>({
         /
         {pages.length}
       </div>
-      {/* className={styles.controls} */}
-      <div className="flex items-center justify-center py-4 mx-4 text-gray-800">
-        <button
-          disabled={activePageIndex === 0}
-          onClick={() => prev()}
+      <button
+        disabled={activePageIndex === 0}
+        onClick={() => prev()}
           // styles.prevButton
-          className="text-lg transition-opacity duration-100 ease-out disabled:opacity-40"
-        >
-          {String.fromCharCode(8592)}
-        </button>
-        {/* className={styles.pagination} */}
+        className="absolute items-center justify-center hidden w-10 h-10 text-lg transition-opacity duration-100 ease-out rounded-full group-hover:enabled:flex left-5 top-1/2 bg-white/80 disabled:hidden"
+      >
+        <ChevronLeft size={30} className="text-gray-800" />
+      </button>
+      <button
+        disabled={activePageIndex === pages.length - 1}
+        onClick={() => next()}
+          // styles.prevButton
+        className="absolute items-center justify-center hidden w-10 h-10 text-lg transition-opacity duration-100 ease-out rounded-full group-hover:enabled:flex right-5 top-1/2 bg-white/80 disabled:hidden"
+      >
+        <ChevronRight size={30} className="text-gray-800" />
+      </button>
+
+      {/* className={styles.controls} */}
+
+      {/* className={styles.pagination} */}
+      {pagination && (
+      <div className="flex items-center justify-center py-4 mx-4 text-gray-800">
         <ol className="flex flex-wrap">
           {pages.map((_, i) => (
             <li
               key={i}
-              className="flex justify-center" // styles.paginationItem
+              className="flex justify-center"
             >
               <button
                 className={classNames(
@@ -112,14 +130,8 @@ export function SlideShow<T extends any>({
             </li>
           ))}
         </ol>
-        <button
-          disabled={activePageIndex === pages.length - 1}
-          onClick={() => next()}
-          className="text-sm transition-opacity duration-100 ease-out disabled:opacity-40" // styles.nextButton
-        >
-          {String.fromCharCode(8594)}
-        </button>
       </div>
+      )}
     </div>
   );
 }
@@ -142,7 +154,7 @@ export function SlideShowItem({
   return (
     <li
     // styles.item
-      className={classNames('w-full overflow-hidden shrink-0 relative', {
+      className={classNames('w-full aspect-square overflow-hidden shrink-0 relative', {
         'snap-start': isSnapPoint, // styles.snapPoint
         '': isActive, // styles.itemActive
       })}
@@ -155,10 +167,16 @@ export function SlideShowItem({
       {/* <p className="">{subtitle}</p> */}
       {/* </div> */}
       {/* styles.itemImage */}
-      <img
+      <Image
         src={src}
         // className="absolute top-0 left-0 w-full h-full"
         alt=""
+        // width={500}
+        // height={600}
+        fill
+        style={{
+          objectFit: 'cover',
+        }}
         // width={500}
         // height={500}
         // alt="Picture of the author"
