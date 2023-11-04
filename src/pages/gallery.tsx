@@ -1,12 +1,6 @@
 import React from 'react';
+import Head from 'next/head';
 import { SlideShow, SlideShowItem } from '@/components/ui/slideshow/Slideshow';
-
-import '../styles/globals.css';
-
-export default {
-  title: 'SlideShow',
-  component: SlideShow,
-};
 
 const items = [
   { title: 'It’s giving', subtitle: '52.073273, -1.014818' },
@@ -26,9 +20,16 @@ const items = [
   subtitle,
 }));
 
-export function Default() {
+export default function Gallery() {
   return (
-    <div>
+    <>
+      <Head>
+        <title>Gallery test</title>
+        <meta
+          name="description"
+          content="Apartments for rent in Tashkent on a google map"
+        />
+      </Head>
       <SlideShow
         items={items}
         renderItem={({
@@ -44,6 +45,6 @@ export function Default() {
           />
         )}
       />
-    </div>
+    </>
   );
 }

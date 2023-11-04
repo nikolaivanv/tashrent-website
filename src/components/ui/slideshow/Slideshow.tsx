@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useSnapCarousel } from 'react-snap-carousel';
-import './reset.css';
+import Image from 'next/image';
+// import './reset.css';
 
-const styles = require('./Slideshow.module.css');
+// const styles = require('./Slideshow.module.css');
+
+// console.log(styles.scroll);
 
 /**
  * This is an example Carousel built on top of `useSnapCarousel`
@@ -60,11 +63,12 @@ export function SlideShow<T extends any>({
 
   return (
     <div
-      className={classNames(styles.root, {
-        [styles.scrollPadding]: scrollPadding,
+      className={classNames('relative', { // styles.root
+        '': scrollPadding, // [styles.scrollPadding]: scrollPadding,
       })}
     >
-      <ul className={styles.scroll} ref={scrollRef}>
+      {/* <ul className={styles.scroll} */}
+      <ul className="box-border relative flex overflow-auto snap-x snap-mandatory overscroll-contain no-scrollbar" ref={scrollRef}>
         {items.map((item, index) => renderItem({
           item,
           index,
@@ -72,30 +76,35 @@ export function SlideShow<T extends any>({
           isActive: activePageIndex === index,
         }))}
       </ul>
-      <div className={styles.pageIndicator}>
+      {/* className={styles.pageIndicator} */}
+      <div className="font-bold text-sm absolute top-2.5 right-2.5 text-gray-800 bg-white/50 px-2.5 py-3">
         {activePageIndex + 1}
         {' '}
         /
         {pages.length}
       </div>
-      <div className={styles.controls}>
+      {/* className={styles.controls} */}
+      <div className="flex items-center justify-center py-4 mx-4 text-gray-800">
         <button
           disabled={activePageIndex === 0}
           onClick={() => prev()}
-          className={styles.prevButton}
+          // styles.prevButton
+          className="text-lg transition-opacity duration-100 ease-out disabled:opacity-40"
         >
           {String.fromCharCode(8592)}
         </button>
-        <ol className={styles.pagination}>
+        {/* className={styles.pagination} */}
+        <ol className="flex flex-wrap">
           {pages.map((_, i) => (
             <li
               key={i}
-              className={classNames(styles.paginationItem, {
-                [styles.paginationItemActive]: i === activePageIndex,
-              })}
+              className="flex justify-center" // styles.paginationItem
             >
               <button
-                className={styles.paginationButton}
+                className={classNames(
+                  'block w-3 h-3 m-2 overflow-hidden transition-opacity duration-100 ease-out bg-gray-800 rounded-full -indent-12',
+                  { 'opacity-30': i === activePageIndex },
+                )} // styles.paginationButton // styles.paginationItemActive
                 onClick={() => goTo(i)}
               >
                 {i + 1}
@@ -106,7 +115,7 @@ export function SlideShow<T extends any>({
         <button
           disabled={activePageIndex === pages.length - 1}
           onClick={() => next()}
-          className={styles.nextButton}
+          className="text-sm transition-opacity duration-100 ease-out disabled:opacity-40" // styles.nextButton
         >
           {String.fromCharCode(8594)}
         </button>
@@ -119,29 +128,41 @@ export interface SlideShowItemProps {
   readonly isSnapPoint: boolean;
   readonly isActive: boolean;
   readonly src: string;
-  readonly title: string;
-  readonly subtitle: string;
+  // readonly title: string;
+  // readonly subtitle: string;
 }
 
 export function SlideShowItem({
   isSnapPoint,
   isActive,
   src,
-  title,
-  subtitle,
+  // title,
+  // subtitle,
 }: SlideShowItemProps) {
   return (
     <li
-      className={classNames(styles.item, {
-        [styles.snapPoint]: isSnapPoint,
-        [styles.itemActive]: isActive,
+    // styles.item
+      className={classNames('w-full overflow-hidden shrink-0 relative', {
+        'snap-start': isSnapPoint, // styles.snapPoint
+        '': isActive, // styles.itemActive
       })}
     >
-      <div className={styles.itemText}>
-        <h2 className={styles.itemTitle}>{title}</h2>
-        <p className={styles.itemSubtitle}>{subtitle}</p>
-      </div>
-      <img src={src} className={styles.itemImage} alt="" />
+      {/* styles.itemText */}
+      {/* <div className=""> */}
+      {/* styles.itemTitle */}
+      {/* <h2 className="">{title}</h2> */}
+      {/* styles.itemSubtitle */}
+      {/* <p className="">{subtitle}</p> */}
+      {/* </div> */}
+      {/* styles.itemImage */}
+      <img
+        src={src}
+        // className="absolute top-0 left-0 w-full h-full"
+        alt=""
+        // width={500}
+        // height={500}
+        // alt="Picture of the author"
+      />
     </li>
   );
 }
