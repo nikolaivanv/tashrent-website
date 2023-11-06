@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Typography from '../typography/Typography';
 
 type Props = {
   name: string
@@ -37,31 +38,37 @@ function RangeInput(props: Props) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <label htmlFor={name} className="block text-sm font-medium leading-6 text-gray-900">
-        {name}
+        <Typography variant="h1">{name}</Typography>
       </label>
-      <div className="mt-2">
-        <input
-          type="number"
-          name={`${name.toLowerCase()}_min`}
-          id={`${name.toLowerCase()}_min`}
-          value={minValue}
-          onChange={handleOnChangeMinValue}
-          onBlur={handleOnBlur}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        />
-      </div>
-      <div className="mt-2">
-        <input
-          type="number"
-          name={`${name.toLowerCase()}_max`}
-          id={`${name.toLowerCase()}_max`}
-          value={maxValue}
-          onChange={handleOnChangeMaxValue}
-          onBlur={handleOnBlur}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        />
+      <div className="flex flex-row space-x-4">
+        <div className="w-20 mt-2">
+          <Typography variant="md">
+            <input
+              type="number"
+              name={`${name.toLowerCase()}_min`}
+              id={`${name.toLowerCase()}_min`}
+              value={minValue}
+              onChange={handleOnChangeMinValue}
+              onBlur={handleOnBlur}
+              className="block w-full rounded-md border-0 py-1.5 pl-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </Typography>
+        </div>
+        <div className="w-20 mt-2">
+          <Typography variant="md">
+            <input
+              type="number"
+              name={`${name.toLowerCase()}_max`}
+              id={`${name.toLowerCase()}_max`}
+              value={maxValue}
+              onChange={handleOnChangeMaxValue}
+              onBlur={handleOnBlur}
+              className="block w-full rounded-md border-0 py-1.5 pl-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </Typography>
+        </div>
       </div>
     </div>
   );

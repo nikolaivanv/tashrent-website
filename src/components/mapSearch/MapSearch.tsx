@@ -51,10 +51,11 @@ function MapSearch(props: Props) {
     setFiltersPanelIsOpen(true);
   };
 
-  const handleFilterStateChange = (newFilterState: FilterState) => {
+  const handleFilterApply = (newFilterState: FilterState) => {
     setFilterState(newFilterState);
     const newFilteredLocations = useFilters(locations, newFilterState);
     setFilteredLocations(newFilteredLocations);
+    setFiltersPanelIsOpen(false);
   };
 
   useMemo(() => {
@@ -80,12 +81,14 @@ function MapSearch(props: Props) {
   // console.log(filterState);
 
   return (
-    <>
-      <Button variant="default" onClick={onShowFiltersButtonClick}>Filters</Button>
-      <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterStateChange} />
+    <div>
+      <div className="absolute z-10 right-10 top-10">
+        <Button variant="default" size="lg" onClick={onShowFiltersButtonClick}>Фильтры</Button>
+      </div>
+      <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterApply} />
       <PropertyDetailsDrawer propertyId={highlightedPropertyId} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
       <Map locations={filteredLocations} onSelectLocations={handleSelectLocations} />
-    </>
+    </div>
   );
 }
 

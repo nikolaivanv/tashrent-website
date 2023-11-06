@@ -71,7 +71,7 @@ export function SlideShow<T extends any>({
       {/* <ul className={styles.scroll} */}
       <ul
         className={classNames(
-          'box-border relative flex overflow-auto snap-x snap-mandatory overscroll-contain no-scrollbar rounded-xl',
+          'box-border relative flex overflow-auto snap-x snap-mandatory overscroll-contain no-scrollbar',
           { 'scroll-p-5': scrollPadding },
         )}
         ref={scrollRef}
@@ -88,6 +88,7 @@ export function SlideShow<T extends any>({
         {activePageIndex + 1}
         {' '}
         /
+        {' '}
         {pages.length}
       </div>
       <button

@@ -10,8 +10,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <Header />
-      <main>{children}</main>
+      {/* <Header /> */}
+      <main className="overflow-x-hidden">{children}</main>
     </ThemeProvider>
   );
 }

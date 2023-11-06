@@ -5,11 +5,13 @@ const listings: IPropertyListing[] = [
   {
     id: '48835409',
     title: 'Cool flat',
+    priceUSD: 700,
     price: 700,
     sourceUrl: 'https://www.olx.uz/d/obyavlenie/yashnobot-dubovi-1-va-2-honali-ID3iUjT.html',
     createdAt: '2023-06-24T18:26:29+05:00',
     refreshedAt: '2023-06-24T18:26:37+05:00',
     description: 'Assalomalekum Dubovida yangi honadonlar 1 2 honali uylar judayam z\u00f2r va yaxshi joylashgan 44kv va 78kv tel 935331318',
+    district: 'Мирзо-Улугбекский район',
     numberOfRooms: 5,
     totalArea: 78,
     floor: 2,

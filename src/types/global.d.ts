@@ -37,10 +37,12 @@ declare global {
     createdAt: string,
     refreshedAt: string,
     description: string,
+    district: string,
     numberOfRooms: number,
     totalArea: number,
     floor: number,
-    totalFloors: number
+    totalFloors: number,
+    sourceUrl: string
   }
 
   interface FilterState {

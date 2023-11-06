@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import PropertyPhotoGallery from './PropertyPhotoGallery';
+import PropertySummary from './PropertySummary';
 
 type Props = {
   property: IPropertyListing;
@@ -34,19 +35,9 @@ function PropertyDetailsCard(props: Props) {
     );
   }
   return (
-    <div className="w-[500px]">
+    <div className="flex flex-col w-screen max-w-lg space-y-3 dark:bg-black">
       <PropertyPhotoGallery images={property.photos} />
-      <div>
-        <div className="text-black">
-          {property.title}
-        </div>
-        <div className="text-black">
-          {property.priceUSD}
-        </div>
-        <div className="text-black">
-          {property.description}
-        </div>
-      </div>
+      <PropertySummary property={property} />
     </div>
   );
 }

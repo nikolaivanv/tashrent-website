@@ -14,7 +14,7 @@ function PropertyDetailsDrawer(props: Props) {
   const PropertyDetailsCardWithProperty = IncludeProperty(PropertyDetailsCard, propertyId);
 
   return (
-    <Drawer title={`Property id: ${propertyId}`} isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Drawer isOpen={isOpen} setIsOpen={setIsOpen} side="left" title="Сдается квартира">
       <PropertyDetailsCardWithProperty />
     </Drawer>
   );

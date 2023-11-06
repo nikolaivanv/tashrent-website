@@ -38,6 +38,8 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       colors: {
+        'typgray-700': '#717171',
+        'typgray-900': '#222222',
         'mint-50': '#EFFAF9',
         'mint-100': '#DFF6F3',
         'mint-200': '#C0EDE7',

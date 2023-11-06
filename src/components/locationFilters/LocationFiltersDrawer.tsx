@@ -15,7 +15,7 @@ function LocationFiltersDrawer(props: Props) {
   } = props;
 
   return (
-    <Drawer title="Filters" isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Drawer title="Фильтры" isOpen={isOpen} setIsOpen={setIsOpen} side="right">
       <LocationFiltersPanel filterState={filterState} onFilter={onFilter} />
     </Drawer>
   );

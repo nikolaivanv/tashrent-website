@@ -21,13 +21,14 @@ function Marker(props: Props) {
     if (onClick) {
       onClick(markerId);
     }
+    e.stopPropagation();
   };
 
   const classes = className(
     {
-      'inline-flex items-center rounded-md px-3 py-1 text-l text-white bg-raisin-black-500 hover:bg-raisin-black-600 shadow-sm': !isCluster,
-      'inline-flex items-center rounded-full px-3 py-1 text-l text-black bg-mint-cream-50 border border-raisin-black-500 hover:bg-raisin-black-200 hover:border-raisin-black-200': isCluster,
-      'px-5 py-2 bg-rust-500 text-white': highlighted && !isCluster,
+      'z-10 inline-flex items-center rounded-md px-3 py-1 text-l text-white bg-raisin-black-500 hover:bg-raisin-black-600 shadow-sm': !isCluster,
+      'z-10 flex justify-center items-center rounded-full h-12 w-12 text-l text-raisin-black-700 bg-green-gray-200 hover:bg-green-gray-300': isCluster,
+      'z-10 px-5 py-2 bg-rust-500 text-white': highlighted && !isCluster,
     },
   );
 
