@@ -24,7 +24,7 @@ export default function PropertySummary(props: Props) {
       </div>
       <Typography variant="md">{roomsSpaceFloor}</Typography>
       <Typography variant="md">{property.district}</Typography>
-      <div className="mt-3">
+      <div className="mt-3 whitespace-pre-line border-t">
         <Typography variant="sm" accent="primary">{property.description}</Typography>
       </div>
     </div>
