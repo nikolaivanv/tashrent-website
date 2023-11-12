@@ -9,7 +9,7 @@ type FilterBoundaries = {
   boundMaxTotalArea: number
 };
 
-function useFindFilterBoundaries(locations: IPropertyForMap[]) {
+function findFilterBoundaries(locations: IPropertyForMap[]) {
   const initialValue = {
     boundMinPrice: locations[0].price,
     boundMaxPrice: locations[0].price,
@@ -44,4 +44,4 @@ function useFindFilterBoundaries(locations: IPropertyForMap[]) {
   return boundaries;
 }
 
-export default useFindFilterBoundaries;
+export default findFilterBoundaries;

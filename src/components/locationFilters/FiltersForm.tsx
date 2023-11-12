@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 // import RangeInputSlider from '../ui/rangeInputSlider/RangeInputSlider';
 import RangeInput from '../ui/rangeInput/RangeInput';
 import { Button, buttonVariants } from '../ui/button/Button';
@@ -6,21 +6,28 @@ import { Button, buttonVariants } from '../ui/button/Button';
 type Props = {
   filterState: FilterState
   onFilter: (filterState: FilterState) => void,
+  onResetFilters: () => void,
 };
 
 function FiltersForm(props: Props) {
-  const { filterState, onFilter } = props;
-  const {
-    currentMinPrice, currentMaxPrice, boundMinPrice, boundMaxPrice,
-  } = filterState;
-
+  const { filterState, onFilter, onResetFilters } = props;
+  console.log('FilterForm: start');
+  console.log(filterState);
   const [newFilterState, setNewFilterState] = useState(filterState);
+  console.log('newFilterState:');
+  console.log(newFilterState);
+
+  useEffect(() => { setNewFilterState(filterState); }, [filterState]);
 
   const handleApplyFilter = () => {
     onFilter(newFilterState);
   };
 
-  const handlePriceRangeChange = (newMinValue: number, newMaxValue: number) => {
+  const handleResetFilters = () => {
+    onResetFilters();
+  };
+
+  const handlePriceRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinPrice: newMinValue,
@@ -28,7 +35,7 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleNumberOfRoomsRangeChange = (newMinValue: number, newMaxValue: number) => {
+  const handleNumberOfRoomsRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinRooms: newMinValue,
@@ -36,7 +43,7 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleTotalAreaRangeChange = (newMinValue: number, newMaxValue: number) => {
+  const handleTotalAreaRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinTotalArea: newMinValue,
@@ -44,14 +51,15 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleFloorRangeChange = (newMinValue: number, newMaxValue: number) => {
+  const handleFloorRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinFloor: newMinValue,
       currentMaxFloor: newMaxValue,
     }));
   };
-
+  console.log('FilterForm: render');
+  console.log(newFilterState);
   return (
     <div className="flex flex-col w-screen max-w-lg pl-3 space-y-8 dark:bg-black">
       <div>
@@ -62,7 +70,7 @@ function FiltersForm(props: Props) {
           currentMinValue={newFilterState.currentMinPrice}
           currentMaxValue={newFilterState.currentMaxPrice}
           onChange={handlePriceRangeChange}
-          onBlur={handleApplyFilter}
+          // onBlur={handleApplyFilter}
         />
       </div>
       <div>
@@ -73,7 +81,7 @@ function FiltersForm(props: Props) {
           currentMinValue={newFilterState.currentMinRooms}
           currentMaxValue={newFilterState.currentMaxRooms}
           onChange={handleNumberOfRoomsRangeChange}
-          onBlur={handleApplyFilter}
+          // onBlur={handleApplyFilter}
         />
       </div>
       <div>
@@ -84,7 +92,7 @@ function FiltersForm(props: Props) {
           currentMinValue={newFilterState.currentMinTotalArea}
           currentMaxValue={newFilterState.currentMaxTotalArea}
           onChange={handleTotalAreaRangeChange}
-          onBlur={handleApplyFilter}
+          // onBlur={handleApplyFilter}
         />
       </div>
       <div>
@@ -95,10 +103,11 @@ function FiltersForm(props: Props) {
           currentMinValue={newFilterState.currentMinFloor}
           currentMaxValue={newFilterState.currentMaxFloor}
           onChange={handleFloorRangeChange}
-          onBlur={handleApplyFilter}
+          // onBlur={handleApplyFilter}
         />
       </div>
-      <div>
+      <div className="flex flex-row space-x-2">
+        <Button variant="secondary" onClick={handleResetFilters}>Сбросить</Button>
         <Button variant="default" onClick={handleApplyFilter}>Применить</Button>
       </div>
     </div>

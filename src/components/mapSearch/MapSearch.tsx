@@ -1,8 +1,8 @@
 import React, {
-  useState, useMemo,
+  useState, useMemo, useCallback, useEffect,
 } from 'react';
-import useFilters from '@/hooks/useFilters';
-import useFindFilterBoundaries from '@/hooks/useFindFilterBoundaries';
+import filterProperties from '@/utils/filterProperties';
+import findFilterBoundaries from '@/utils/findFilterBoundaries';
 
 import Drawer from '../ui/drawer/Drawer';
 import PropertyDetailsCard from '../propertyDetails/PropertyDetailsCard';
@@ -21,23 +21,22 @@ function MapSearch(props: Props) {
   const [highlightedPropertyId, setHighlightedPropertyId] = useState<string | undefined>();
   const [propertyDetailsIsOpen, setPropertyDetailsIsOpen] = useState(false);
   const [filterState, setFilterState] = useState<FilterState>({
-    boundMinPrice: 0,
-    boundMaxPrice: 10000,
-    boundMinRooms: 1,
-    boundMaxRooms: 10,
-    boundMinFloor: 1,
-    boundMaxFloor: 100,
-    boundMinTotalArea: 0,
-    boundMaxTotalArea: 1000,
-    currentOnlyPreciseLocations: false,
-    currentMinPrice: 0,
-    currentMaxPrice: 10000,
-    currentMinRooms: 1,
-    currentMaxRooms: 10,
-    currentMinFloor: 1,
-    currentMaxFloor: 100,
-    currentMinTotalArea: 0,
-    currentMaxTotalArea: 1000,
+    boundMinPrice: undefined,
+    boundMaxPrice: undefined,
+    boundMinRooms: undefined,
+    boundMaxRooms: undefined,
+    boundMinFloor: undefined,
+    boundMaxFloor: undefined,
+    boundMinTotalArea: undefined,
+    boundMaxTotalArea: undefined,
+    currentMinPrice: undefined,
+    currentMaxPrice: undefined,
+    currentMinRooms: undefined,
+    currentMaxRooms: undefined,
+    currentMinFloor: undefined,
+    currentMaxFloor: undefined,
+    currentMinTotalArea: undefined,
+    currentMaxTotalArea: undefined,
   });
   const [filtersPanelIsOpen, setFiltersPanelIsOpen] = useState(true);
   const [filteredLocations, setFilteredLocations] = useState(locations);
@@ -53,16 +52,19 @@ function MapSearch(props: Props) {
 
   const handleFilterApply = (newFilterState: FilterState) => {
     setFilterState(newFilterState);
-    const newFilteredLocations = useFilters(locations, newFilterState);
+    const newFilteredLocations = filterProperties(locations, newFilterState);
     setFilteredLocations(newFilteredLocations);
     setFiltersPanelIsOpen(false);
   };
 
-  useMemo(() => {
-    const filterBoundaries = useFindFilterBoundaries(locations);
+  const filterBoundaries = useMemo(
+    () => findFilterBoundaries(locations),
+    [locations],
+  );
+
+  useEffect(() => {
     const newFilterState = {
       ...filterBoundaries,
-      currentOnlyPreciseLocations: false,
       currentMinPrice: filterBoundaries.boundMinPrice,
       currentMaxPrice: filterBoundaries.boundMaxPrice,
       currentMinRooms: filterBoundaries.boundMinRooms,
@@ -72,20 +74,33 @@ function MapSearch(props: Props) {
       currentMinTotalArea: filterBoundaries.boundMinTotalArea,
       currentMaxTotalArea: filterBoundaries.boundMaxTotalArea,
     };
-    // console.log(newFilterState);
     setFilterState(newFilterState);
-    // const newFilteredLocations = useFilters(locations, newFilterState);
-    // setFilteredLocations(newFilteredLocations);
-  }, [locations]);
+  }, [filterBoundaries]);
 
-  // console.log(filterState);
+  const handleResetFilters = useCallback(() => {
+    const newFilterState = {
+      ...filterBoundaries,
+      currentMinPrice: filterBoundaries.boundMinPrice,
+      currentMaxPrice: filterBoundaries.boundMaxPrice,
+      currentMinRooms: filterBoundaries.boundMinRooms,
+      currentMaxRooms: filterBoundaries.boundMaxRooms,
+      currentMinFloor: filterBoundaries.boundMinFloor,
+      currentMaxFloor: filterBoundaries.boundMaxFloor,
+      currentMinTotalArea: filterBoundaries.boundMinTotalArea,
+      currentMaxTotalArea: filterBoundaries.boundMaxTotalArea,
+    };
+    console.log(newFilterState);
+    setFilterState(newFilterState);
+  }, [filterBoundaries]);
+  console.log('MapSearch');
+  console.log(filterState);
 
   return (
     <div>
       <div className="absolute z-10 right-10 top-10">
         <Button variant="default" size="lg" onClick={onShowFiltersButtonClick}>Фильтры</Button>
       </div>
-      <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterApply} />
+      <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterApply} onResetFilters={handleResetFilters} />
       <PropertyDetailsDrawer propertyId={highlightedPropertyId} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
       <Map locations={filteredLocations} onSelectLocations={handleSelectLocations} />
     </div>

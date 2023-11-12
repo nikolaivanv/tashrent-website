@@ -46,22 +46,21 @@ declare global {
   }
 
   interface FilterState {
-    boundMinPrice: number
-    boundMaxPrice: number
-    boundMinRooms: number
-    boundMaxRooms: number
-    boundMinFloor: number
-    boundMaxFloor: number
-    boundMinTotalArea: number
-    boundMaxTotalArea: number
-    currentMinPrice: number
-    currentMaxPrice: number
-    currentOnlyPreciseLocations: boolean
-    currentMinRooms: number
-    currentMaxRooms: number
-    currentMinFloor: number
-    currentMaxFloor: number
-    currentMinTotalArea: number
-    currentMaxTotalArea: number
+    boundMinPrice: number | undefined
+    boundMaxPrice: number | undefined
+    boundMinRooms: number | undefined
+    boundMaxRooms: number | undefined
+    boundMinFloor: number | undefined
+    boundMaxFloor: number | undefined
+    boundMinTotalArea: number | undefined
+    boundMaxTotalArea: number | undefined
+    currentMinPrice: number | undefined
+    currentMaxPrice: number | undefined
+    currentMinRooms: number | undefined
+    currentMaxRooms: number | undefined
+    currentMinFloor: number | undefined
+    currentMaxFloor: number | undefined
+    currentMinTotalArea: number | undefined
+    currentMaxTotalArea: number | undefined
   }
 }
