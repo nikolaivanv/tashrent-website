@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import PropertyPhotoGallery from './PropertyPhotoGallery';
 import PropertySummary from './PropertySummary';
@@ -8,10 +7,14 @@ type Props = {
   property: IPropertyListing;
   isLoading: boolean;
   isError: boolean;
+  onToggleSave: (propertyId: string) => void;
+  isPropertySaved: boolean;
 };
 
 function PropertyDetailsCard(props: Props) {
-  const { property, isLoading, isError } = props;
+  const {
+    property, isLoading, isError, onToggleSave, isPropertySaved,
+  } = props;
 
   if (!property) {
     return (
@@ -37,7 +40,12 @@ function PropertyDetailsCard(props: Props) {
   return (
     <div className="flex flex-col w-screen max-w-lg space-y-3 dark:bg-black">
       <PropertyPhotoGallery images={property.photos} />
-      <PropertySummary property={property} />
+      <PropertySummary
+        property={property}
+        onToggleSave={onToggleSave}
+        isPropertySaved={isPropertySaved}
+        showDescription
+      />
     </div>
   );
 }

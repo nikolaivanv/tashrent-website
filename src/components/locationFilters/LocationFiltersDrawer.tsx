@@ -14,8 +14,7 @@ function LocationFiltersDrawer(props: Props) {
   const {
     filterState, onFilter, onResetFilters, isOpen, setIsOpen,
   } = props;
-  console.log('LocationFiltersDrawer render');
-  console.log(filterState);
+
   return (
     <Drawer title="Фильтры" isOpen={isOpen} setIsOpen={setIsOpen} side="right">
       <FiltersForm filterState={filterState} onFilter={onFilter} onResetFilters={onResetFilters} />

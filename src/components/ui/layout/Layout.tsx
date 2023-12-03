@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
-import Header from '../header/Header';
+// import Header from '../header/Header';
+// import { Toaster } from '../toast/Toaster';
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     >
       {/* <Header /> */}
       <main className="overflow-x-hidden">{children}</main>
+      {/* <Toaster /> */}
     </ThemeProvider>
   );
 }

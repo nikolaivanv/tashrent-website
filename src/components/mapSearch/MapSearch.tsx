@@ -3,14 +3,13 @@ import React, {
 } from 'react';
 import filterProperties from '@/utils/filterProperties';
 import findFilterBoundaries from '@/utils/findFilterBoundaries';
-
-import Drawer from '../ui/drawer/Drawer';
-import PropertyDetailsCard from '../propertyDetails/PropertyDetailsCard';
-import LocationFiltersPanel from '../locationFilters/FiltersForm';
-import { Button, buttonVariants } from '../ui/button/Button';
+import { useRouter } from 'next/router';
+import { Button } from '../ui/button/Button';
 import Map from '../map/Map';
-import PropertyDetailsDrawer from '../propertyDetails/propertyDetailsDrawer';
+import PropertyDetailsDrawer from '../propertyDetails/PropertyDetailsDrawer';
 import LocationFiltersDrawer from '../locationFilters/LocationFiltersDrawer';
+import { Toaster } from '../ui/toast/Toaster';
+import BookmarksDrawer from '../bookmarks/BookmarksDrawer';
 
 type Props = {
   locations: IPropertyForMap[]
@@ -20,6 +19,7 @@ function MapSearch(props: Props) {
   const { locations } = props;
   const [highlightedPropertyId, setHighlightedPropertyId] = useState<string | undefined>();
   const [propertyDetailsIsOpen, setPropertyDetailsIsOpen] = useState(false);
+  const [bookmarksIsOpen, setBookmarksIsOpen] = useState(false);
   const [filterState, setFilterState] = useState<FilterState>({
     boundMinPrice: undefined,
     boundMaxPrice: undefined,
@@ -38,16 +38,31 @@ function MapSearch(props: Props) {
     currentMinTotalArea: undefined,
     currentMaxTotalArea: undefined,
   });
-  const [filtersPanelIsOpen, setFiltersPanelIsOpen] = useState(true);
+  const [filtersPanelIsOpen, setFiltersPanelIsOpen] = useState(false);
   const [filteredLocations, setFilteredLocations] = useState(locations);
+  const [savedPropertiesIds, setSavedPropertiesIds] = useState<string[]>([]);
+  const router = useRouter();
 
   const handleSelectLocations = (propertyId: string) => {
     setHighlightedPropertyId(propertyId);
     setPropertyDetailsIsOpen(true);
+    setBookmarksIsOpen(false);
+    router.push(`/?propertyId=${propertyId}`);
   };
 
   const onShowFiltersButtonClick = () => {
     setFiltersPanelIsOpen(true);
+  };
+
+  const onShowBookmarksButtonClick = () => {
+    setBookmarksIsOpen(true);
+  };
+
+  const onNavigateToProperty = (propertyId: string) => {
+    setHighlightedPropertyId(propertyId);
+    setPropertyDetailsIsOpen(true);
+    setBookmarksIsOpen(false);
+    router.push(`/?propertyId=${propertyId}`);
   };
 
   const handleFilterApply = (newFilterState: FilterState) => {
@@ -77,6 +92,57 @@ function MapSearch(props: Props) {
     setFilterState(newFilterState);
   }, [filterBoundaries]);
 
+  useEffect(() => {
+    // const getSavedPropertiesFromLocalStorage = () => {
+    //   console.log('getSavedPropertiesFromLocalStorage');
+    //   const savedPropertiesString = localStorage.getItem('savedProperties');
+    //   if (savedPropertiesString) {
+    //     setSavedPropertiesIds(JSON.parse(savedPropertiesString) as string[]);
+    //   }
+    // };
+    // getSavedPropertiesFromLocalStorage();
+    // window.addEventListener('storage', getSavedPropertiesFromLocalStorage);
+    // return () => {
+    //   window.removeEventListener('storage', getSavedPropertiesFromLocalStorage);
+    // };
+    const savedPropertiesString = localStorage.getItem('savedProperties');
+    if (savedPropertiesString) {
+      setSavedPropertiesIds(JSON.parse(savedPropertiesString) as string[]);
+    }
+  }, []);
+
+  const onRemoveSavedProperty = (propertyId: string) => {
+    const newSavedPropertiesIds = savedPropertiesIds.filter((id) => id !== propertyId);
+    setSavedPropertiesIds(newSavedPropertiesIds);
+    localStorage.setItem('savedProperties', JSON.stringify(newSavedPropertiesIds));
+  };
+
+  const onAddSavedProperty = (propertyId: string) => {
+    if (!savedPropertiesIds.includes(propertyId)) {
+      const newSavedPropertiesIds = [...savedPropertiesIds, propertyId];
+      setSavedPropertiesIds(newSavedPropertiesIds);
+      localStorage.setItem('savedProperties', JSON.stringify(newSavedPropertiesIds));
+    }
+  };
+
+  const onToggleSave = (propertyId: string) => {
+    if (savedPropertiesIds.includes(propertyId)) {
+      onRemoveSavedProperty(propertyId);
+    } else {
+      onAddSavedProperty(propertyId);
+    }
+  };
+
+  const isPropertySaved = (propertyId: string) => savedPropertiesIds.includes(propertyId);
+
+  useEffect(() => {
+    const { propertyId } = router.query;
+    if (propertyId) {
+      setHighlightedPropertyId(propertyId as string);
+      setPropertyDetailsIsOpen(true);
+    }
+  }, [router.query]);
+
   const handleResetFilters = useCallback(() => {
     const newFilterState = {
       ...filterBoundaries,
@@ -89,20 +155,44 @@ function MapSearch(props: Props) {
       currentMinTotalArea: filterBoundaries.boundMinTotalArea,
       currentMaxTotalArea: filterBoundaries.boundMaxTotalArea,
     };
-    console.log(newFilterState);
     setFilterState(newFilterState);
   }, [filterBoundaries]);
-  console.log('MapSearch');
-  console.log(filterState);
 
   return (
     <div>
       <div className="absolute z-10 right-10 top-10">
-        <Button variant="default" size="lg" onClick={onShowFiltersButtonClick}>Фильтры</Button>
+        <div className="flex flex-col space-y-2">
+          <Button variant="default" size="lg" onClick={onShowFiltersButtonClick}>Фильтры</Button>
+          <Button variant="default" size="lg" onClick={onShowBookmarksButtonClick}>Сохраненные</Button>
+        </div>
       </div>
-      <LocationFiltersDrawer isOpen={filtersPanelIsOpen} setIsOpen={setFiltersPanelIsOpen} filterState={filterState} onFilter={handleFilterApply} onResetFilters={handleResetFilters} />
-      <PropertyDetailsDrawer propertyId={highlightedPropertyId} isOpen={propertyDetailsIsOpen} setIsOpen={setPropertyDetailsIsOpen} />
-      <Map locations={filteredLocations} onSelectLocations={handleSelectLocations} />
+      <BookmarksDrawer
+        isOpen={bookmarksIsOpen}
+        setIsOpen={setBookmarksIsOpen}
+        onNavigateToProperty={onNavigateToProperty}
+        savedPropertiesIds={savedPropertiesIds}
+        onToggleSave={onToggleSave}
+      />
+      <LocationFiltersDrawer
+        isOpen={filtersPanelIsOpen}
+        setIsOpen={setFiltersPanelIsOpen}
+        filterState={filterState}
+        onFilter={handleFilterApply}
+        onResetFilters={handleResetFilters}
+      />
+      <PropertyDetailsDrawer
+        propertyId={highlightedPropertyId}
+        isOpen={propertyDetailsIsOpen}
+        setIsOpen={setPropertyDetailsIsOpen}
+        isPropertySaved={isPropertySaved(highlightedPropertyId as string)}
+        onToggleSave={onToggleSave}
+      />
+      <Map
+        locations={filteredLocations}
+        onSelectLocations={handleSelectLocations}
+        highlightedPropertyId={highlightedPropertyId}
+      />
+      <Toaster />
     </div>
   );
 }

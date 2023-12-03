@@ -7,15 +7,22 @@ type Props = {
   propertyId: string
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  onToggleSave: (propertyId: string) => void;
+  isPropertySaved: boolean;
 };
 
 function PropertyDetailsDrawer(props: Props) {
-  const { propertyId, isOpen, setIsOpen } = props;
+  const {
+    propertyId, isOpen, setIsOpen, onToggleSave, isPropertySaved,
+  } = props;
   const PropertyDetailsCardWithProperty = IncludeProperty(PropertyDetailsCard, propertyId);
 
   return (
     <Drawer isOpen={isOpen} setIsOpen={setIsOpen} side="left" title="Сдается квартира">
-      <PropertyDetailsCardWithProperty />
+      <PropertyDetailsCardWithProperty
+        onToggleSave={onToggleSave}
+        isPropertySaved={isPropertySaved}
+      />
     </Drawer>
   );
 }

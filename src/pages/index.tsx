@@ -8,7 +8,7 @@ type Props = {
   locations: IPropertyForMap[]
 };
 
-export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { locations } = props;
   return (
     <>
@@ -28,3 +28,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const locations = await getAllPropertiesForMap();
   return { props: { locations } };
 };
+
+export default Home;

@@ -11,11 +11,7 @@ type Props = {
 
 function FiltersForm(props: Props) {
   const { filterState, onFilter, onResetFilters } = props;
-  console.log('FilterForm: start');
-  console.log(filterState);
   const [newFilterState, setNewFilterState] = useState(filterState);
-  console.log('newFilterState:');
-  console.log(newFilterState);
 
   useEffect(() => { setNewFilterState(filterState); }, [filterState]);
 
@@ -58,8 +54,6 @@ function FiltersForm(props: Props) {
       currentMaxFloor: newMaxValue,
     }));
   };
-  console.log('FilterForm: render');
-  console.log(newFilterState);
   return (
     <div className="flex flex-col w-screen max-w-lg pl-3 space-y-8 dark:bg-black">
       <div>

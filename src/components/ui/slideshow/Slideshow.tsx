@@ -172,6 +172,7 @@ export function SlideShowItem({
         src={src}
         // className="absolute top-0 left-0 w-full h-full"
         alt=""
+        priority
         // width={500}
         // height={600}
         fill

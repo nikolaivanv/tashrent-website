@@ -1,20 +1,30 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import GoogleMap from 'google-maps-react-markers';
 import useSupercluster from '../../hooks/useSupercluster';
 import Marker from './Marker';
 
 type Props = {
   locations: IPropertyForMap[],
-  onSelectLocations: (selectedLocationsIds: number) => void
+  onSelectLocations: (selectedLocationsIds: number) => void,
+  highlightedPropertyId?: string,
 };
 
 function Map(props: Props) {
-  const { locations, onSelectLocations } = props;
+  const { locations, onSelectLocations, highlightedPropertyId } = props;
   const mapRef = useRef(null);
   const [bounds, setBounds] = useState([69.15693006286622, 41.231565100006854, 69.3232699371338, 41.367364210349656]);
   const [zoom, setZoom] = useState(13);
   const [mapReady, setMapReady] = useState(false);
-  const [highlighted, setHighlighted] = useState<string | undefined>();
+  const [highlighted, setHighlighted] = useState<string | undefined>(highlightedPropertyId);
+
+  useEffect(() => {
+    setHighlighted(highlightedPropertyId);
+    const property = locations.find((location) => location.id === highlightedPropertyId);
+    if (property && mapReady) {
+      mapRef.current.panTo({ lat: property.location.lat, lng: property.location.lng });
+      mapRef.current.setZoom(18);
+    }
+  }, [highlightedPropertyId, mapRef, locations, mapReady]);
 
   const points = locations.map((location) => ({
     type: 'Feature',
@@ -39,9 +49,11 @@ function Map(props: Props) {
     mapTypeControl: false,
   };
 
-  const onMarkerClick = (markerId: string) => {
-    setHighlighted(markerId);
-    onSelectLocations(markerId);
+  const onMarkerClick = (marker, longitude, latitude) => {
+    // mapRef.current.panTo({ lat: latitude, lng: longitude });
+    console.log(marker);
+    setHighlighted(marker.properties.locationId);
+    onSelectLocations(marker.properties.locationId);
   };
 
   const onClusterClick = (cluster, longitude, latitude) => {
@@ -106,7 +118,7 @@ function Map(props: Props) {
               isCluster={false}
               markerId={cluster.properties.locationId}
               highlighted={highlighted === cluster.properties.locationId}
-              onClick={onMarkerClick}
+              onClick={() => onMarkerClick(cluster, longitude, latitude)}
             />
           );
         })}
