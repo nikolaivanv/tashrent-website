@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import RangeInputSlider from '../ui/rangeInputSlider/RangeInputSlider';
 import RangeInput from '../ui/rangeInput/RangeInput';
-import { Button, buttonVariants } from '../ui/button/Button';
+import { Button } from '../ui/button/Button';
 
 type Props = {
   filterState: FilterState
@@ -23,7 +23,10 @@ function FiltersForm(props: Props) {
     onResetFilters();
   };
 
-  const handlePriceRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
+  const handlePriceRangeChange = (
+    newMinValue: number | undefined,
+    newMaxValue: number | undefined,
+  ) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinPrice: newMinValue,
@@ -31,7 +34,10 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleNumberOfRoomsRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
+  const handleNumberOfRoomsRangeChange = (
+    newMinValue: number | undefined,
+    newMaxValue: number | undefined,
+  ) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinRooms: newMinValue,
@@ -39,7 +45,10 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleTotalAreaRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
+  const handleTotalAreaRangeChange = (
+    newMinValue: number | undefined,
+    newMaxValue: number | undefined,
+  ) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinTotalArea: newMinValue,
@@ -47,7 +56,10 @@ function FiltersForm(props: Props) {
     }));
   };
 
-  const handleFloorRangeChange = (newMinValue: number | undefined, newMaxValue: number | undefined) => {
+  const handleFloorRangeChange = (
+    newMinValue: number | undefined,
+    newMaxValue: number | undefined,
+  ) => {
     setNewFilterState((s) => ({
       ...s,
       currentMinFloor: newMinValue,
@@ -59,8 +71,6 @@ function FiltersForm(props: Props) {
       <div>
         <RangeInput
           name="Цена"
-          boundMinValue={newFilterState.boundMinPrice}
-          boundMaxValue={newFilterState.boundMaxPrice}
           currentMinValue={newFilterState.currentMinPrice}
           currentMaxValue={newFilterState.currentMaxPrice}
           onChange={handlePriceRangeChange}
@@ -70,8 +80,6 @@ function FiltersForm(props: Props) {
       <div>
         <RangeInput
           name="Количество комнат"
-          boundMinValue={newFilterState.boundMinRooms}
-          boundMaxValue={newFilterState.boundMaxRooms}
           currentMinValue={newFilterState.currentMinRooms}
           currentMaxValue={newFilterState.currentMaxRooms}
           onChange={handleNumberOfRoomsRangeChange}
@@ -81,8 +89,6 @@ function FiltersForm(props: Props) {
       <div>
         <RangeInput
           name="Общая площадь"
-          boundMinValue={newFilterState.boundMinTotalArea}
-          boundMaxValue={newFilterState.boundMaxTotalArea}
           currentMinValue={newFilterState.currentMinTotalArea}
           currentMaxValue={newFilterState.currentMaxTotalArea}
           onChange={handleTotalAreaRangeChange}
@@ -92,8 +98,6 @@ function FiltersForm(props: Props) {
       <div>
         <RangeInput
           name="Этаж"
-          boundMinValue={newFilterState.boundMinFloor}
-          boundMaxValue={newFilterState.boundMaxFloor}
           currentMinValue={newFilterState.currentMinFloor}
           currentMaxValue={newFilterState.currentMaxFloor}
           onChange={handleFloorRangeChange}

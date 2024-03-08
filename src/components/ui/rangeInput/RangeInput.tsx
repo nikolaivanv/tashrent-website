@@ -3,17 +3,15 @@ import Typography from '../typography/Typography';
 
 type Props = {
   name: string
-  boundMinValue: number
-  boundMaxValue: number
   currentMinValue: number | undefined
   currentMaxValue: number | undefined
   onChange: (newMinValue: number | undefined, newMaxValue: number | undefined) => void
-  onBlur: () => void
+  // onBlur: () => void
 };
 
 function RangeInput(props: Props) {
   const {
-    name, boundMinValue, boundMaxValue, currentMinValue, currentMaxValue, onChange, onBlur,
+    name, currentMinValue, currentMaxValue, onChange, // , onBlur,
   } = props;
 
   const [minValue, setMinValue] = useState(currentMinValue);
@@ -24,31 +22,31 @@ function RangeInput(props: Props) {
     setMaxValue(currentMaxValue);
   }, [currentMinValue, currentMaxValue]);
 
-  const handleOnBlur = () => {
-    const adjustedNewMaxValue = maxValue < minValue ? minValue : maxValue;
-    setMaxValue(adjustedNewMaxValue);
-    if (onBlur) {
-      onBlur();
-    }
-  };
+  // const handleOnBlur = () => {
+  //   const adjustedNewMaxValue = maxValue < minValue ? minValue : maxValue;
+  //   setMaxValue(adjustedNewMaxValue);
+  //   if (onBlur) {
+  //     onBlur();
+  //   }
+  // };
 
-  const handleOnChangeMinValue = (e) => {
+  const handleOnChangeMinValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newMinValue: number | undefined;
     if (e.target.value === '') {
       newMinValue = undefined;
     } else {
-      newMinValue = parseInt(e.target.value);
+      newMinValue = parseInt(e.target.value, 10);
     }
     setMinValue(newMinValue);
     onChange(newMinValue, maxValue);
   };
 
-  const handleOnChangeMaxValue = (e) => {
+  const handleOnChangeMaxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newMaxValue: number | undefined;
     if (e.target.value === '') {
       newMaxValue = undefined;
     } else {
-      newMaxValue = parseInt(e.target.value);
+      newMaxValue = parseInt(e.target.value, 10);
     }
     setMaxValue(newMaxValue);
     onChange(minValue, newMaxValue);
@@ -68,7 +66,7 @@ function RangeInput(props: Props) {
               id={`${name.toLowerCase()}_min`}
               value={minValue ?? ''}
               onChange={handleOnChangeMinValue}
-              onBlur={handleOnBlur}
+              // onBlur={handleOnBlur}
               className="block w-full rounded-md border-0 py-1.5 pl-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </Typography>
@@ -81,7 +79,7 @@ function RangeInput(props: Props) {
               id={`${name.toLowerCase()}_max`}
               value={maxValue ?? ''}
               onChange={handleOnChangeMaxValue}
-              onBlur={handleOnBlur}
+              // onBlur={handleOnBlur}
               className="block w-full rounded-md border-0 py-1.5 pl-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </Typography>

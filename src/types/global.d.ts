@@ -46,8 +46,8 @@ declare global {
   }
 
   interface FilterState {
-    boundMinPrice: number | undefined
-    boundMaxPrice: number | undefined
+    boundMinPrice: number
+    boundMaxPrice: number
     boundMinRooms: number | undefined
     boundMaxRooms: number | undefined
     boundMinFloor: number | undefined
