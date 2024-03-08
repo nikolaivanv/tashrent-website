@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Marker from '@/components/map/MMarker';
+import Marker from '@/components/map/Marker';
 import '../styles/globals.css';
 
 const meta: Meta<typeof Marker> = {
