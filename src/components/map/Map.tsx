@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import GoogleMap, { LatLngBounds, onGoogleApiLoadedProps } from 'google-maps-react-markers';
 import Supercluster from 'supercluster';
 import useSupercluster from '../../hooks/useSupercluster';
-import Marker from './Marker';
+import Marker from './MMarker';
 
 type MapPoint = Supercluster.PointFeature<Supercluster.AnyProps>;
 type ClusterPoint = Supercluster.ClusterFeature<Supercluster.AnyProps>;
