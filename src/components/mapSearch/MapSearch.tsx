@@ -21,14 +21,14 @@ function MapSearch(props: Props) {
   const [propertyDetailsIsOpen, setPropertyDetailsIsOpen] = useState(false);
   const [bookmarksIsOpen, setBookmarksIsOpen] = useState(false);
   const [filterState, setFilterState] = useState<FilterState>({
-    boundMinPrice: undefined,
-    boundMaxPrice: undefined,
-    boundMinRooms: undefined,
-    boundMaxRooms: undefined,
-    boundMinFloor: undefined,
-    boundMaxFloor: undefined,
-    boundMinTotalArea: undefined,
-    boundMaxTotalArea: undefined,
+    // boundMinPrice: undefined,
+    // boundMaxPrice: undefined,
+    // boundMinRooms: undefined,
+    // boundMaxRooms: undefined,
+    // boundMinFloor: undefined,
+    // boundMaxFloor: undefined,
+    // boundMinTotalArea: undefined,
+    // boundMaxTotalArea: undefined,
     currentMinPrice: undefined,
     currentMaxPrice: undefined,
     currentMinRooms: undefined,
@@ -181,7 +181,7 @@ function MapSearch(props: Props) {
         onResetFilters={handleResetFilters}
       />
       <PropertyDetailsDrawer
-        propertyId={highlightedPropertyId}
+        propertyId={highlightedPropertyId!}
         isOpen={propertyDetailsIsOpen}
         setIsOpen={setPropertyDetailsIsOpen}
         isPropertySaved={isPropertySaved(highlightedPropertyId as string)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import PropertyDetailsCompact from '@/components/propertyDetailsCompact/PropertyDetailsCompact';
+import PropertyDetailsCompact from '@/components/bookmarks/propertyDetailsCompact/PropertyDetailsCompact';
 import '../styles/globals.css';
 import listings from '@/mockData';
 

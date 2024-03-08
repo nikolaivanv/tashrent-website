@@ -18,6 +18,15 @@ declare global {
     floor: number
   }
 
+  // type MapPoint = {
+  //   type: 'Feature',
+  //   properties: { cluster: boolean, locationId: string, price: number },
+  //   geometry: {
+  //     type: 'Point',
+  //     coordinates: [number, number],
+  //   },
+  // };
+
   interface IImage {
     id: string
     url: string
@@ -46,14 +55,14 @@ declare global {
   }
 
   interface FilterState {
-    boundMinPrice: number
-    boundMaxPrice: number
-    boundMinRooms: number | undefined
-    boundMaxRooms: number | undefined
-    boundMinFloor: number | undefined
-    boundMaxFloor: number | undefined
-    boundMinTotalArea: number | undefined
-    boundMaxTotalArea: number | undefined
+    // boundMinPrice: number
+    // boundMaxPrice: number
+    // boundMinRooms: number | undefined
+    // boundMaxRooms: number | undefined
+    // boundMinFloor: number | undefined
+    // boundMaxFloor: number | undefined
+    // boundMinTotalArea: number | undefined
+    // boundMaxTotalArea: number | undefined
     currentMinPrice: number | undefined
     currentMaxPrice: number | undefined
     currentMinRooms: number | undefined

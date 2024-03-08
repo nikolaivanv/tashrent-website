@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import GoogleMap from 'google-maps-react-markers';
+import GoogleMap, { LatLngBounds, onGoogleApiLoadedProps } from 'google-maps-react-markers';
+import Supercluster from 'supercluster';
 import useSupercluster from '../../hooks/useSupercluster';
 import Marker from './Marker';
+
+type MapPoint = Supercluster.PointFeature<Supercluster.AnyProps>;
+type ClusterPoint = Supercluster.ClusterFeature<Supercluster.AnyProps>;
 
 type Props = {
   locations: IPropertyForMap[],
@@ -11,8 +15,8 @@ type Props = {
 
 function Map(props: Props) {
   const { locations, onSelectLocations, highlightedPropertyId } = props;
-  const mapRef = useRef(null);
-  const [bounds, setBounds] = useState(
+  const mapRef = useRef<any>(null);
+  const [bounds, setBounds] = useState<LatLngBounds>(
     [69.15693006286622, 41.231565100006854, 69.3232699371338, 41.367364210349656],
   );
   const [zoom, setZoom] = useState(13);
@@ -27,15 +31,6 @@ function Map(props: Props) {
       mapRef.current.setZoom(18);
     }
   }, [highlightedPropertyId, mapRef, locations, mapReady]);
-
-  type MapPoint = {
-    type: 'Feature',
-    properties: { cluster: boolean, locationId: string, price: number },
-    geometry: {
-      type: 'Point',
-      coordinates: [number, number],
-    },
-  };
 
   const points: MapPoint[] = locations.map((location) => ({
     type: 'Feature',
@@ -66,16 +61,21 @@ function Map(props: Props) {
     onSelectLocations(mapPoint.properties.locationId);
   };
 
-  const onClusterClick = (cluster, longitude, latitude) => {
+  const onClusterClick = (
+    cluster: Supercluster.ClusterFeature<Supercluster.AnyProps>,
+    longitude: number,
+    latitude: number,
+  ) => {
     const expansionZoom = Math.min(
-      supercluster.getClusterExpansionZoom(cluster.id),
+      supercluster!.getClusterExpansionZoom(parseInt(cluster.id!.toString(), 10)),
       20,
     );
     mapRef.current.setZoom(expansionZoom);
     mapRef.current.panTo({ lat: latitude, lng: longitude });
   };
 
-  const onGoogleApiLoaded = ({ map, maps }) => {
+  const onGoogleApiLoaded = (props: onGoogleApiLoadedProps) => {
+    const { map } = props;
     mapRef.current = map;
     setMapReady(true);
   };
@@ -88,11 +88,11 @@ function Map(props: Props) {
         defaultZoom={13}
         onGoogleApiLoaded={onGoogleApiLoaded}
         options={options}
-        yesIWantToUseGoogleMapApiInternals
-        onChange={({ zoom, bounds }) => {
-          setZoom(zoom);
-          const ne = bounds.getNorthEast();
-          const sw = bounds.getSouthWest();
+        // yesIWantToUseGoogleMapApiInternals
+        onChange={(e) => {
+          setZoom(e.zoom);
+          const ne = e.bounds.getNorthEast();
+          const sw = e.bounds.getSouthWest();
           setBounds([sw.lng(), sw.lat(), ne.lng(), ne.lat()]);
         }}
       >
@@ -111,10 +111,10 @@ function Map(props: Props) {
                 // text={`${cluster.price}`}
                 lat={latitude}
                 lng={longitude}
-                markerId={cluster.id}
+                markerId={cluster.id!.toString()}
                 isCluster
                 highlighted={highlighted === cluster.id}
-                onClick={() => onClusterClick(cluster, longitude, latitude)}
+                onClick={() => onClusterClick(cluster as ClusterPoint, longitude, latitude)}
               />
             );
           }
@@ -128,7 +128,7 @@ function Map(props: Props) {
               isCluster={false}
               markerId={cluster.properties.locationId}
               highlighted={highlighted === cluster.properties.locationId}
-              onClick={() => onMarkerClick(cluster, longitude, latitude)}
+              onClick={() => onMarkerClick(cluster)}
             />
           );
         })}

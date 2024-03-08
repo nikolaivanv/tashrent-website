@@ -1,28 +1,36 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
 import { dequal } from 'dequal';
 import Supercluster from 'supercluster';
 
-function useSupercluster(_ref) {
+type MapProps = {
+  points: Supercluster.PointFeature<Supercluster.AnyProps>[],
+  bounds: [number, number, number, number],
+  zoom: number,
+  options: Supercluster.Options<Supercluster.AnyProps, Supercluster.AnyProps>,
+};
+
+function useSupercluster(mapProps: MapProps) {
   const {
     points, bounds, zoom, options,
-  } = _ref;
+  } = mapProps;
 
   // console.log(points);
   // console.log(zoom);
 
-  const superclusterRef = useRef();
-  const pointsRef = useRef();
+  const superclusterRef = useRef<Supercluster<Supercluster.AnyProps, Supercluster.AnyProps>>();
+  const pointsRef = useRef<Supercluster.PointFeature<Supercluster.AnyProps>[]>();
 
-  const [clusters, setClusters] = useState([]);
+  const [clusters, setClusters] = useState<(Supercluster.PointFeature<Supercluster.AnyProps>
+  | Supercluster.ClusterFeature<Supercluster.AnyProps>)[]>([]);
   const zoomInt = Math.round(zoom);
 
   useDeepCompareEffectNoCheck(() => {
     if (!superclusterRef.current
       || dequal(pointsRef.current, points)
-      || !dequal(superclusterRef.current.options, options)) {
+    ) {
       superclusterRef.current = new Supercluster(options);
-      superclusterRef.current!.load(points);
+      superclusterRef.current.load(points);
     }
 
     if (bounds) {
