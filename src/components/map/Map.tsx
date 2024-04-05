@@ -83,7 +83,7 @@ function Map(props: Props) {
   return (
     <div className="w-full h-screen">
       <GoogleMap
-        apiKey="AIzaSyBNiRXTTteHR_vvMGMFcWzGWrXyjN43DGk"
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
         defaultCenter={{ lat: 41.2995, lng: 69.2401 }}
         defaultZoom={13}
         onGoogleApiLoaded={onGoogleApiLoaded}

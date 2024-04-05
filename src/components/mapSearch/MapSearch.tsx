@@ -159,7 +159,7 @@ function MapSearch(props: Props) {
   }, [filterBoundaries]);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <div className="absolute z-10 right-10 top-10">
         <div className="flex flex-col space-y-2">
           <Button variant="default" size="lg" onClick={onShowFiltersButtonClick}>Фильтры</Button>
