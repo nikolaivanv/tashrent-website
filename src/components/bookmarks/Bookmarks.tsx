@@ -44,16 +44,19 @@ export default function Bookmarks(props: Props) {
     return (
       <div className="flex flex-col space-y-12">
         {properties.map((property) => (
-          <div key={property.id}>
-            <PropertyDetailsCompact
-              property={property}
-              isError={isError}
-              isLoading={isLoading}
-              onClick={() => onPropertyClick(property.id)}
-              isPropertySaved={savedPropertiesIds.includes(property.id)}
-              onToggleSave={onToggleSave}
-            />
-          </div>
+          property
+            && (
+            <div key={property.id}>
+              <PropertyDetailsCompact
+                property={property}
+                isError={isError}
+                isLoading={isLoading}
+                onClick={() => onPropertyClick(property.id)}
+                isPropertySaved={savedPropertiesIds.includes(property.id)}
+                onToggleSave={onToggleSave}
+              />
+            </div>
+            )
         ))}
       </div>
     );
