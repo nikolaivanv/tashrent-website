@@ -16,7 +16,7 @@ type Props = {
 };
 
 function MapSearch(props: Props) {
-  console.log('Render: MapSearch');
+  //console.log('Render: MapSearch');
 
   const { locations } = props;
   const [highlightedPropertyId, setHighlightedPropertyId] = useState<string | undefined>();
