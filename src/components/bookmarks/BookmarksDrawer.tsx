@@ -16,7 +16,7 @@ function BookmarksDrawer(props: Props) {
     isOpen, setIsOpen, onNavigateToProperty, savedPropertiesIds, onToggleSave,
   } = props;
 
-  console.log('Render: BookmarksDrawer');
+  //console.log('Render: BookmarksDrawer');
 
   return (
     <Drawer isOpen={isOpen} setIsOpen={setIsOpen} side="left" title="Сохраненные объявления">
