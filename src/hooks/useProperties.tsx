@@ -13,7 +13,7 @@ type PropertiesResponse = {
 
 function useProperties(propertyIds: string[]): PropertiesResponse {
   const urls = propertyIds.length > 0 ? propertyIds.map((id) => `/api/properties/${id}`) : null;
-  const { data, error, isLoading } = useSWR(urls, fetcher);
+  const { data, error, isLoading } = useSWR(urls, fetcher, { refreshInterval: 1800000, revalidateOnFocus: false });
 
   return {
     properties: data ? data.map((d) => d.data) : undefined,

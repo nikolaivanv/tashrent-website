@@ -16,6 +16,8 @@ type Props = {
 };
 
 function MapSearch(props: Props) {
+  console.log('Render: MapSearch');
+
   const { locations } = props;
   const [highlightedPropertyId, setHighlightedPropertyId] = useState<string | undefined>();
   const [propertyDetailsIsOpen, setPropertyDetailsIsOpen] = useState(false);
@@ -180,13 +182,15 @@ function MapSearch(props: Props) {
         onFilter={handleFilterApply}
         onResetFilters={handleResetFilters}
       />
+      {highlightedPropertyId && (
       <PropertyDetailsDrawer
-        propertyId={highlightedPropertyId!}
+        propertyId={highlightedPropertyId}
         isOpen={propertyDetailsIsOpen}
         setIsOpen={setPropertyDetailsIsOpen}
         isPropertySaved={isPropertySaved(highlightedPropertyId as string)}
         onToggleSave={onToggleSave}
       />
+      )}
       <Map
         locations={filteredLocations}
         onSelectLocations={handleSelectLocations}

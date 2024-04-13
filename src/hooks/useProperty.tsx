@@ -9,7 +9,7 @@ type PropertyResponse = {
 };
 
 function useProperty(propertyId: string): PropertyResponse {
-  const { data, error, isLoading } = useSWR(`/api/properties/${propertyId}`, fetcher);
+  const { data, error, isLoading } = useSWR(`/api/properties/${propertyId}`, fetcher, { refreshInterval: 1800000, revalidateOnFocus: false });
 
   return {
     property: data ? data.data : undefined,

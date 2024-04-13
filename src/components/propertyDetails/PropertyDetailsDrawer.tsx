@@ -12,6 +12,7 @@ type Props = {
 };
 
 function PropertyDetailsDrawer(props: Props) {
+  console.log('Render: PropertyDetailsDrawer', props.propertyId);
   const {
     propertyId, isOpen, setIsOpen, onToggleSave, isPropertySaved,
   } = props;
