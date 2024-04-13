@@ -14,7 +14,7 @@ type Props = {
 };
 
 function Map(props: Props) {
-  console.log('Render: Map');
+  //console.log('Render: Map');
   const { locations, onSelectLocations, highlightedPropertyId } = props;
   const mapRef = useRef<any>(null);
   const [bounds, setBounds] = useState<LatLngBounds>(

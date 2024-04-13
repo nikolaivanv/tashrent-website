@@ -12,7 +12,7 @@ type Props = {
 
 function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { locations } = props;
-  console.log('Render: Home');
+  //console.log('Render: Home');
   return (
     <>
       <Head>
@@ -33,9 +33,12 @@ function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
 // };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  console.log('getStaticProps');
+  //console.log('getStaticProps');
   const locations = await getAllPropertiesForMap();
-  return { props: { locations } };
+  return { 
+    props: { locations },
+    revalidate: 60*30
+   };
 };
 
 export default Home;
