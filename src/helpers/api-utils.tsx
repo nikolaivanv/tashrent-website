@@ -1,25 +1,3 @@
-// import listings from '@/mockData';
-// import path from 'path';
-import AWS from 'aws-sdk';
-// import { promises as fs } from 'fs';
-
-// async function readListingsFromFile(): Promise<IPropertyListing[]> {
-//   let listings: IPropertyListing[] = [];
-//   const jsonDirectory = process.cwd();
-//   listings = await fs.readFile(`${jsonDirectory}/listings.json`, 'utf8').then((content) => JSON.parse(content));
-//   // listings = await fetch('./listings.json')
-//   //  .then((response) => response.json());
-//   // console.log(listings);
-//   return listings;
-// }
-
-// AWS.config.update({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-// });
-
-// const s3 = new AWS.S3();
-
 async function readListingsFromS3(): Promise<IPropertyListing[]> {
   //let listings: IPropertyListing[] = [];
   // const params = {
