@@ -27,7 +27,7 @@ function useSupercluster(mapProps: MapProps) {
 
   useDeepCompareEffectNoCheck(() => {
     if (!superclusterRef.current
-      || dequal(pointsRef.current, points)
+      || !dequal(pointsRef.current, points)
     ) {
       superclusterRef.current = new Supercluster(options);
       superclusterRef.current.load(points);
