@@ -12,14 +12,14 @@ type Props = {
 
 function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { locations } = props;
-  //console.log('Render: Home');
+  // console.log('Render: Home');
   return (
     <>
       <Head>
-        <title>Tashrent</title>
+        <title>Tashrent | Аренда квартир в Ташкенте | Удобный поиск на карте</title>
         <meta
           name="description"
-          content="Apartments for rent in Tashkent on a google map"
+          content="Tashrent | Аренда квартир в Ташкенте | Удобный поиск на карте"
         />
       </Head>
       <MapSearch locations={locations} />
@@ -33,12 +33,12 @@ function Home(props: InferGetStaticPropsType<typeof getStaticProps>) {
 // };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  //console.log('getStaticProps');
+  // console.log('getStaticProps');
   const locations = await getAllPropertiesForMap();
-  return { 
+  return {
     props: { locations },
-    revalidate: 60*30
-   };
+    revalidate: 60 * 30,
+  };
 };
 
 export default Home;
